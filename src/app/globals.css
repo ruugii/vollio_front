@@ -12,6 +12,15 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@theme {
+  --color-vollio-orange: #F37021;
+  --color-vollio-light: #F9A66C;
+  --color-vollio-white: #FFF9F5;
+  --color-vollio-dark: #2C2C2C;
+  --color-vollio-gray: #A7A7A7;
+  --color-vollio-accent: #2EC4B6;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
