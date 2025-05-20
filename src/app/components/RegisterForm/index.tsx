@@ -1,10 +1,11 @@
 "use client";
 
 import RegisterUser from "@/app/api/register/register";
+import Button from "@/app/ux/Button";
+import Input from "@/app/ux/Input";
 import { useState } from "react";
 
 export default function RegisterForm() {
-
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -13,53 +14,53 @@ export default function RegisterForm() {
 
   return (
     <form className="flex flex-col space-y-4">
-      <input
+      <Input
         type="text"
         placeholder="Nombre de usuario"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        className="border border-gray-300 p-2 rounded"
       />
-      <input
+      <Input
         type="text"
         placeholder="Nombre"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="border border-gray-300 p-2 rounded"
       />
-      <input
+      <Input
         type="text"
         placeholder="Apellido"
         value={surname}
         onChange={(e) => setSurname(e.target.value)}
-        className="border border-gray-300 p-2 rounded"
       />
-      <input
+      <Input
         type="email"
         placeholder="Correo electrónico"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="border border-gray-300 p-2 rounded"
       />
-      <input
+      <Input
         type="password"
         placeholder="Contraseña"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="border border-gray-300 p-2 rounded"
       />
-      <button
+      <Button
         type="submit"
-        className="bg-vollio-accent text-white p-2 rounded hover:bg-vollio-dark transition duration-200"
         onClick={(e) => {
           e.preventDefault();
-          console.log("Registering user:", { username, name, surname, email, password });
+          console.log("Registering user:", {
+            username,
+            name,
+            surname,
+            email,
+            password,
+          });
           RegisterUser({
             username,
             firstName: name,
             lastName: surname,
             email,
-            password
+            password,
           })
             .then((response) => {
               console.log("User registered successfully:", response);
@@ -72,7 +73,7 @@ export default function RegisterForm() {
         }}
       >
         Registrarse
-      </button>
+      </Button>
     </form>
   );
 }
