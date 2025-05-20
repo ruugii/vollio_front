@@ -10,6 +10,9 @@ export default function Header() {
           <MenuItem href="/" className="text-lg">
             Inicio
           </MenuItem>
+          <MenuItem href="/about" className="text-lg">
+            Acerca de nosotros
+          </MenuItem>
           <PrivateHeader />
         </ul>
       </nav>
