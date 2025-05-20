@@ -2,18 +2,43 @@
 
 import { useEffect, useState } from "react";
 import MenuItem from "../MenuItem";
+import getTeam from "@/app/api/team/haveTeam";
 
 export default function PrivateHeader() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const [token, setToken] = useState<string>("");
+  const [haveTeam, setHaveTeam] = useState<boolean>(false);
 
   useEffect(() => {
-    const checkLogin = async () => {
-      console.log("Checking login status...");
-      const token = sessionStorage.getItem("token");
-      console.log("Token from session storage:", token);
-      console.log(!token);
+    if (isLoggedIn) {
+      console.log("User is logged in");
+      getTeam({ token })
+        .then((response) => {
+          console.log("Response from getTeam:", response.isInTeam);
+          if (response.isInTeam) {
+            setHaveTeam(true);
+          } else {
+            setHaveTeam(false);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching team data:", error);
+        });
+    }
+  }, [isLoggedIn, token]);
 
-      if (!token) {
+  useEffect(() => {
+    console.log("Checking login status...");
+    console.log("Token from sessionStorage:", sessionStorage.getItem("token"));
+    setToken(sessionStorage.getItem("token") ?? "");
+    console.log("token:", token);
+  }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      console.log("token:", token);
+
+      if (token === "") {
         setIsLoggedIn(false);
         return;
       }
@@ -39,9 +64,8 @@ export default function PrivateHeader() {
         setIsLoggedIn(false);
       }
     };
-
-    checkLogin();
-  }, []);
+    getData();
+  }, [token]);
 
   if (isLoggedIn === null) {
     // Opcional: mientras se verifica, no mostrar nada o un spinner
@@ -51,9 +75,15 @@ export default function PrivateHeader() {
   if (isLoggedIn) {
     return (
       <>
-        <MenuItem href="/team" className="text-lg">
-          Mi Equipo
-        </MenuItem>
+        {haveTeam ? (
+          <MenuItem href="/team" className="text-lg">
+            Mi Equipo
+          </MenuItem>
+        ) : (
+          <MenuItem href="/create-team" className="text-lg">
+            Crear Equipo
+          </MenuItem>
+        )}
         <MenuItem href="/logout" className="text-lg">
           Cerrar Sesión
         </MenuItem>
