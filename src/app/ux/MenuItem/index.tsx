@@ -13,7 +13,7 @@ export default function MenuItem({
     <li>
       <Link
         href={href}
-        className={`hover:text-vollio-accent hover:underline ${className}`}
+        className={`hover:text-vollio-900 hover:underline ${className}`}
       >
         {children}
       </Link>
