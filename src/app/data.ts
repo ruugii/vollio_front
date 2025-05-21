@@ -1,1 +1,1 @@
-export const BASE_API_URL = 'http://localhost:4000/api/v1';
+export const BASE_API_URL = 'https://api.vollio.app/api/v1';
