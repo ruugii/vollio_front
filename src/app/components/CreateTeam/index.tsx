@@ -13,9 +13,11 @@ export default function CreateTeam() {
         onChange={(e) => setName(e.target.value)}
         type="text"
         placeholder="Nombre del equipo"
+        className="rounded-md p-2 mb-4 w-full"
       />
       <Button
         type="submit"
+        className="rounded-md p-2 w-full"
         onClick={(e) => {
           e.preventDefault();
           console.log("Creating team with name:", name);

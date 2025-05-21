@@ -14,12 +14,12 @@ export default function Input({
   disabled?: boolean;
 }) {
   const getclassName = () => {
-    let className =
+    let classNameToReturn =
       "border border-vollio-300 p-2 rounded disabled:bg-vollio-200";
     if (className) {
-      className += ` ${className}`;
+      classNameToReturn += ` ${className}`;
     }
-    return className;
+    return classNameToReturn;
   };
   return (
     <input
