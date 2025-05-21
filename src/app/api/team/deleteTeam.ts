@@ -1,4 +1,4 @@
-import { BASE_API_URL } from "../../data.ts";
+import { BASE_API_URL } from "../../data";
 
 export default async function deleteTeam(token: string) {
   try {

@@ -1,4 +1,4 @@
-import { BASE_API_URL } from "../../data.ts";
+import { BASE_API_URL } from "../../data";
 
 interface logininterface {
   email: string;
