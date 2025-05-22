@@ -39,7 +39,6 @@ export default function LoginForm() {
             })
             .catch((error) => {
               console.error("Error in login:", error);
-              alert("Error al iniciar sesión");
             });
         }}
       >

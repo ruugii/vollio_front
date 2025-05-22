@@ -18,11 +18,9 @@ export default async function createTeam(
         window.location.href = "/";
       } else {
         console.error("Error creating team:", res.statusText);
-        alert("Error al crear el equipo");
       }
     })
     .catch((error) => {
       console.error("Error in create team:", error);
-      alert("Error al crear el equipo");
     });
 }

@@ -44,15 +44,9 @@ export default function CreateMatch() {
           })
             .then((response) => {
               console.log("Response from createMatch:", response);
-              if (response) {
-                alert("Partido creado");
-              } else {
-                alert("Error al crear el partido");
-              }
             })
             .catch((error) => {
               console.error("Error creating match:", error);
-              alert("Error al crear el partido");
             });
         }}
       >

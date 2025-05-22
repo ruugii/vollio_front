@@ -13,7 +13,6 @@ export default async function getMyMatch(token: string) {
         return res.json();
       } else {
         console.error("Error creating match:", res.statusText);
-        alert("Error al crear el partido");
       }
     })
     .then((data) => {
@@ -24,6 +23,5 @@ export default async function getMyMatch(token: string) {
     })
     .catch((error) => {
       console.error("Error in create match:", error);
-      alert("Error al crear el partido");
     });
 }

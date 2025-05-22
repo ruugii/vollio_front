@@ -26,10 +26,8 @@ export default async function createMatch(
       return await response.json();
     } else {
       console.error("Error creating match:", response.statusText);
-      alert("Error al crear el partido");
     }
   } catch (error) {
     console.error("Error creating match:", error);
-    alert("Error al crear el partido");
   }
 }
