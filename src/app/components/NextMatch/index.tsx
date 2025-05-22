@@ -4,6 +4,7 @@ import getNextMatch from "@/app/api/match/getNextMatch";
 import H2_component from "@/app/Text/H2_component";
 import H3_component from "@/app/Text/H3_component";
 import Text from "@/app/Text/Text";
+import Button from "@/app/ux/Button";
 import { useEffect, useState } from "react";
 
 export default function NextMatch() {
@@ -55,6 +56,11 @@ export default function NextMatch() {
                 <br />
                 ELO: {match.team.elo ? match.team.elo : ""}
               </Text>
+              <Button
+                disabled
+              >
+                APUNTARSE
+              </Button>
             </div>
           ))}
       </div>
