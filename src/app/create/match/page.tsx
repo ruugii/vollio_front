@@ -3,6 +3,7 @@ import CreateMatch from "../../components/CreateMatch";
 import H1_component from "../../Text/H1_component";
 import Text from "../../Text/Text";
 import Input from "../../ux/Input";
+import NextMatch from "@/app/components/NextMatch";
 
 export default function createMatchPrice() {
   return (
@@ -15,6 +16,7 @@ export default function createMatchPrice() {
       </Text>
       <CreateMatch />
       <GetMyMatch />
+      <NextMatch />
     </main>
   )
 }
