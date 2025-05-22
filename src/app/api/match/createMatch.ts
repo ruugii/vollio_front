@@ -1,3 +1,5 @@
+import { BASE_API_URL } from "@/app/data";
+
 export default async function createMatch(
   token: string,
   { location, date }: { location: string; date: Date | string }
@@ -8,7 +10,7 @@ export default async function createMatch(
     console.log("Creating match with token:", token);
     console.log("Match details:", { location, date: dateString });
 
-    const response = await fetch(`http://localhost:4000/api/v1/match/create`, {
+    const response = await fetch(`${BASE_API_URL}/match/create`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
