@@ -123,7 +123,7 @@ export default function Team({
                   })
                     .then((response) => {
                       console.log("Response from exitFromTeam:", response);
-                      document.location.href = "/create-team";
+                      document.location.href = "/create/team";
                       setModalOpen(false);
                     })
                     .catch((error) => {
@@ -164,7 +164,7 @@ export default function Team({
                   deleteTeam(sessionStorage.getItem("token") ?? "")
                     .then((response) => {
                       console.log("Response from exitFromTeam:", response);
-                      document.location.href = "/create-team";
+                      document.location.href = "/create/team";
                       setModalOpen(false);
                     })
                     .catch((error) => {

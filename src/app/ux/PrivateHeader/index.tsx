@@ -73,13 +73,13 @@ export default function PrivateHeader() {
             Mi Equipo
           </MenuItem>
           {isAdmin && (
-            <MenuItem href="/match" className="text-lg">
+            <MenuItem href="/create/match" className="text-lg">
               Crear Partido
             </MenuItem>
           )}
           </>
         ) : (
-          <MenuItem href="/create-team" className="text-lg">
+          <MenuItem href="/create/team" className="text-lg">
             Crear Equipo
           </MenuItem>
         )}

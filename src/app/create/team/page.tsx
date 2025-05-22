@@ -1,6 +1,6 @@
-import CreateTeam from "../components/CreateTeam";
-import H1_component from "../Text/H1_component";
-import Text from "../Text/Text";
+import CreateTeam from "../../components/CreateTeam";
+import H1_component from "../../Text/H1_component";
+import Text from "../../Text/Text";
 
 export default function CreateTeamPage() {
   return (
