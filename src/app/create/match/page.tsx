@@ -1,3 +1,4 @@
+import GetMyMatch from "@/app/components/GetMyMatch";
 import CreateMatch from "../../components/CreateMatch";
 import H1_component from "../../Text/H1_component";
 import Text from "../../Text/Text";
@@ -13,6 +14,7 @@ export default function createMatchPrice() {
         Aquí puedes crear un nuevo partido.
       </Text>
       <CreateMatch />
+      <GetMyMatch />
     </main>
   )
 }
