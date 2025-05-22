@@ -1,5 +1,6 @@
 "use client";
 
+import createTeam from "@/app/api/team/createTeam";
 import Button from "@/app/ux/Button";
 import Input from "@/app/ux/Input";
 import { useState } from "react";
@@ -21,27 +22,12 @@ export default function CreateTeam() {
         onClick={(e) => {
           e.preventDefault();
           console.log("Creating team with name:", name);
-          fetch("http://localhost:4000/api/v1/teams/create", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          createTeam(
+            {
+              name,
             },
-            body: JSON.stringify({ name }),
-          })
-            .then((res) => {
-              if (res.ok) {
-                console.log("Team created successfully");
-                window.location.href = "/";
-              } else {
-                console.error("Error creating team:", res.statusText);
-                alert("Error al crear el equipo");
-              }
-            })
-            .catch((error) => {
-              console.error("Error in create team:", error);
-              alert("Error al crear el equipo");
-            });
+            sessionStorage.getItem("token") ?? ""
+          );
         }}
       >
         Crear equipo
