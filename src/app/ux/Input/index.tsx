@@ -1,3 +1,5 @@
+
+
 export default function Input({
   value,
   onChange,
@@ -6,7 +8,7 @@ export default function Input({
   className,
   disabled,
 }: {
-  value: any;
+  value?: any;
   onChange: (arg0: any) => void;
   type: string;
   placeholder: string;
