@@ -14,6 +14,7 @@ export default function GetMyMatch() {
   }, []);
 
   useEffect(() => {
+    if (token === "") return;
     getMyMatch(token)
       .then((res) => {
         if (res) {
