@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import createMatch from "@/app/api/match/createMatch";
 import Button from "@/app/ux/Button";
@@ -10,11 +10,12 @@ export default function CreateMatch() {
   const [date, setDate] = useState<Date>(new Date());
 
   useEffect(() => {
-    console.log(date);
+    console.log("Fecha local seleccionada:", date);
+    console.log("Fecha enviada (UTC):", date.toISOString());
   }, [date]);
 
   return (
-    <form className="container mx-auto h-full px-4 py-8">
+    <form className="container mx-auto px-4 py-8">
       <Input
         value={location}
         onChange={(e) => setLocation(e.target.value)}
@@ -23,8 +24,13 @@ export default function CreateMatch() {
         className="rounded-md p-2 mb-4 w-full"
       />
       <Input
-        onChange={(e) => setDate(new Date(e.target.value))}
         type="datetime-local"
+        onChange={(e) => {
+          const localDate = new Date(e.target.value);
+          // Convertimos a fecha UTC real ajustando el desfase horario
+          const correctedDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000);
+          setDate(correctedDate);
+        }}
         placeholder="Fecha del partido"
         className="rounded-md p-2 mb-4 w-full"
       />
@@ -34,7 +40,7 @@ export default function CreateMatch() {
           const token = sessionStorage.getItem("token");
           await createMatch(token ?? "", {
             location,
-            date: date,
+            date: date.toISOString(), // 👈 Enviamos fecha en formato UTC
           })
             .then((response) => {
               console.log("Response from createMatch:", response);
