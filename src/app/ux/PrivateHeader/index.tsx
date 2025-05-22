@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import MenuItem from "../MenuItem";
 import getTeam from "@/app/api/team/haveTeam";
+import checkAuth from "@/app/api/auth/checkAuth";
 
 export default function PrivateHeader() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [token, setToken] = useState<string>("");
   const [haveTeam, setHaveTeam] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -17,6 +19,7 @@ export default function PrivateHeader() {
           console.log("Response from getTeam:", response.isInTeam);
           if (response.isInTeam) {
             setHaveTeam(true);
+            setIsAdmin(response.isAdmin);
           } else {
             setHaveTeam(false);
           }
@@ -43,26 +46,15 @@ export default function PrivateHeader() {
         return;
       }
 
-      try {
-        const response = await fetch(`http://localhost:4000/api/auth/check`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (response.ok) {
+      checkAuth(token)
+        .then((response) => {
           console.log("Response from check login:", response);
-          const data = await response.json();
-          setIsLoggedIn(data.valid);
-        } else {
-          console.error("Error checking login:", response.statusText);
-          setIsLoggedIn(false);
-        }
-      } catch (error) {
-        console.error("Error checking login:", error);
-        setIsLoggedIn(false);
-      }
+          if (response) {
+            setIsLoggedIn(response.valid);
+          } else {
+            setIsLoggedIn(false);
+          }
+        })
     };
     getData();
   }, [token]);
@@ -76,9 +68,16 @@ export default function PrivateHeader() {
     return (
       <>
         {haveTeam ? (
+          <>
           <MenuItem href="/team" className="text-lg">
             Mi Equipo
           </MenuItem>
+          {isAdmin && (
+            <MenuItem href="/match" className="text-lg">
+              Crear Partido
+            </MenuItem>
+          )}
+          </>
         ) : (
           <MenuItem href="/create-team" className="text-lg">
             Crear Equipo
