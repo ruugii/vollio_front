@@ -43,7 +43,15 @@ export default function GetMyMatch() {
               </Text>
               <Text className="text-gray-700 mb-2">
                 Equipo rival:{" "}
-                {match?.team_2 ? match?.team_2 : "No hay rival por el momento"}
+                {match?.rival ? (
+                  <>
+                    Nombre: {match.rival.name ?? ""}
+                    <br />
+                    ELO: {match.rival.elo ?? ""}
+                  </>
+                ) : (
+                  "No hay rival por el momento"
+                )}
               </Text>
             </div>
           ))}
