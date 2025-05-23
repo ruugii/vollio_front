@@ -56,19 +56,10 @@ export default function NextMatch() {
                   : ""}
                 <br />
                 ELO: {match.team.elo ? match.team.elo : ""}
+                <br />
+                Numero de jugadores del equipo: {match.team.players.length ?? 0}
               </Text>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  joinMatch(token, match?.id)
-                    .then((data) => {
-                      console.log(data);
-                    })
-                    .catch((error) => {
-                      console.log(error);
-                    });
-                }}
-              >
+              <Button onClick={() => joinMatch(token, match?.id)}>
                 APUNTARSE
               </Button>
             </div>
