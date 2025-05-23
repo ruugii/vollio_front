@@ -14,8 +14,7 @@ export default async function getMyMatch(token: string) {
       }
     })
     .then((data) => {
-      console.log("Response from createMatch:", data);
-      if (data.match) {
+      if (data?.match) {
         return data;
       }
     });
