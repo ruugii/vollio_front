@@ -17,7 +17,7 @@ export default async function createTeam(
         console.log("Team created successfully");
         window.location.href = "/";
       } else {
-        console.error("Error creating team:", res.statusText);
+        console.error("Error creating team:", res);
       }
     })
     .catch((error) => {

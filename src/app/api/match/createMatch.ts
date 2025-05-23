@@ -25,7 +25,7 @@ export default async function createMatch(
     if (response.ok) {
       return await response.json();
     } else {
-      console.error("Error creating match:", response.statusText);
+      console.error("Error creating match:", response);
     }
   } catch (error) {
     console.error("Error creating match:", error);

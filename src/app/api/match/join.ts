@@ -12,7 +12,7 @@ export default async function joinMatch(token: string, id: number) {
       if (res.ok) {
         return res.json();
       } else {
-        console.error("Error creating match:", res.statusText);
+        console.error("Error creating match:", res);
       }
     })
     .catch((error) => {
