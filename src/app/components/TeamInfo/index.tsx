@@ -3,13 +3,16 @@
 import getTeamInfo from "@/app/api/team/getTeam";
 import Team from "@/app/ux/Team";
 import { useEffect, useState } from "react";
+import Loader from "../Loader";
 
 export default function TeamInfo() {
   const [token, setToken] = useState<string>("");
   const [data, setData] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    setIsLoading(true);
     console.log("Checking login status...");
     console.log("Token from sessionStorage:", sessionStorage.getItem("token"));
     setToken(sessionStorage.getItem("token") ?? "");
@@ -29,9 +32,11 @@ export default function TeamInfo() {
             } else {
               console.log("User is not in a team");
             }
+            setIsLoading(false);
           })
           .catch((error) => {
             console.error("Error fetching team data:", error);
+            setIsLoading(false);
           });
       }
     };
@@ -39,5 +44,10 @@ export default function TeamInfo() {
     getData();
   }, [token]);
 
-  return <Team team={data} isAdmin={isAdmin} />;
+  return (
+    <>
+      <Loader open={isLoading} />
+      <Team team={data} isAdmin={isAdmin} />
+    </>
+  );
 }
