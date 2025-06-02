@@ -6,7 +6,8 @@ import H2_component from "@/app/Text/H2_component";
 import H3_component from "@/app/Text/H3_component";
 import H4_component from "@/app/Text/H4_component";
 import Text from "@/app/Text/Text";
-import { useEffect, useState } from "react";
+import Chart from "chart.js/auto";
+import { useEffect, useRef, useState } from "react";
 
 interface Member {
   username: string;
@@ -22,14 +23,31 @@ interface TeamInteface {
   players: Member[];
 }
 
+interface EloInterface {
+  elo: string;
+  updated: Date;
+}
+
 export default function Team({
   team,
   isAdmin,
+  elo,
 }: {
   team: TeamInteface[];
   isAdmin: boolean;
+  elo: EloInterface[];
 }) {
+  const chartRef = useRef<HTMLCanvasElement | null>(null);
   const [teamData, setTeamData] = useState<TeamInteface[]>(team);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<
+    "" | "deleteUser" | "exitTeam" | "deleteTeam"
+  >("");
+  const [selectedPlayer, setSelectedPlayer] = useState<Member | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [eloGraf, setEloGraf] = useState<{ elo: number; update: Date }[]>();
+  const [chart, setChart] = useState<Chart>();
+  const [seeGraf, setSeeGraf] = useState<boolean>(false);
 
   useEffect(() => {
     setTeamData(team);
@@ -39,15 +57,72 @@ export default function Team({
     console.log("Team data updated:", teamData);
   }, [teamData]);
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState<
-    "" | "deleteUser" | "exitTeam" | "deleteTeam"
-  >("");
-  const [selectedPlayer, setSelectedPlayer] = useState<Member | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  useEffect(() => {
+    if (elo) {
+      console.log(`elo: ${elo}`);
+      const aux = elo.map((e) => {
+        return {
+          elo: parseFloat(e.elo),
+          update: e.updated,
+        };
+      });
+
+      setEloGraf(aux);
+    }
+  }, [elo]);
+
+  useEffect(() => {
+    if (!chartRef.current || !eloGraf) return;
+
+    if (chart) chart.destroy(); // Destruye el gráfico anterior
+
+    const newChart = new Chart(chartRef.current, {
+      type: "line",
+      data: {
+        labels: eloGraf.map((data) =>
+          new Date(data.update).toLocaleDateString()
+        ),
+        datasets: [
+          {
+            label: "ELO",
+            data: eloGraf.map((data) => data.elo),
+            borderColor: "rgb(75, 192, 192)",
+            tension: 0.2,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            ticks: {
+              stepSize: 100,
+            },
+          },
+        },
+      },
+    });
+
+    setChart(newChart);
+  }, [eloGraf, seeGraf]);
 
   return (
     <>
+      {seeGraf && (
+        <div className=" fixed top-0 z-50 left-0 bg-vollio-50/50 h-screen w-screen">
+          <div className=" text-right">
+            <button
+              className="py-4 px-4 bg-vollio-100"
+              onClick={() => setSeeGraf(false)}
+            >
+              X
+            </button>
+          </div>
+          <div className=" h-5/6 bg-vollio-100">
+            <canvas ref={chartRef}></canvas>
+          </div>
+        </div>
+      )}
       <Loader open={isLoading} />
       {modalOpen && modalContent === "deleteUser" ? (
         <div className="fixed inset-0 flex items-center justify-center bg-vollio-950/50">
@@ -206,9 +281,14 @@ export default function Team({
               className="flex flex-col gap-2 border-vollio-950 border-solid border-2 rounded-lg p-4"
             >
               <H2_component>{t?.name ?? ""}</H2_component>
-              <H3_component>
-                Elo: {t.elo ? `${t.elo} - ${getName(t.elo)}` : ""}
-              </H3_component>
+              <div className=" flex flex-row content-center items-center justify-between">
+                <H3_component>
+                  Elo: {t.elo ? `${t.elo} - ${getName(t.elo)}` : ""}
+                </H3_component>
+                <button onClick={() => setSeeGraf(true)}>
+                  Ver evolucion del elo
+                </button>
+              </div>
               <div className="flex flex-col">
                 <H4_component>Members:</H4_component>
                 <ul className=" flex flex-col gap-2">

@@ -8,6 +8,7 @@ import Loader from "../Loader";
 export default function TeamInfo() {
   const [token, setToken] = useState<string>("");
   const [data, setData] = useState<any>(null);
+  const [elo, setElo] = useState<any>(null)
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -26,6 +27,7 @@ export default function TeamInfo() {
           .then((response) => {
             console.log("Response from getTeamInfo:", response);
             setData(response.data);
+            setElo(response.elo)
             setIsAdmin(response.isAdmin);
             if (response.isInTeam) {
               console.log("User is in a team");
@@ -47,7 +49,7 @@ export default function TeamInfo() {
   return (
     <>
       <Loader open={isLoading} />
-      <Team team={data} isAdmin={isAdmin} />
+      <Team team={data} isAdmin={isAdmin} elo={elo} />
     </>
   );
 }
