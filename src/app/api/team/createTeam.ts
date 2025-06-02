@@ -10,7 +10,7 @@ export default async function createTeam(
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(name),
+    body: JSON.stringify({name}),
   })
     .then((res) => {
       if (res.ok) {
