@@ -1,6 +1,5 @@
 import Text from "./Text/Text";
 import H1_component from "./Text/H1_component";
-import H2_component from "./Text/H2_component";
 
 export default function Home() {
   return (
@@ -11,9 +10,6 @@ export default function Home() {
       <Text>
         La plataforma de gestion de equipos y partidos de voley playa amateur.
       </Text>
-      <H2_component className="mt-8 mb-4">
-        La comunidad de vollio
-      </H2_component>
     </main>
   );
 }
