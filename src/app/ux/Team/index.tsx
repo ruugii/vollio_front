@@ -1,5 +1,6 @@
 import deleteTeam from "@/app/api/team/deleteTeam";
 import exitFromTeam from "@/app/api/team/exitFromTeam";
+import Loader from "@/app/components/Loader";
 import getName from "@/app/functions/elo/getName";
 import H2_component from "@/app/Text/H2_component";
 import H3_component from "@/app/Text/H3_component";
@@ -43,9 +44,11 @@ export default function Team({
     "" | "deleteUser" | "exitTeam" | "deleteTeam"
   >("");
   const [selectedPlayer, setSelectedPlayer] = useState<Member | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
     <>
+      <Loader open={isLoading} />
       {modalOpen && modalContent === "deleteUser" ? (
         <div className="fixed inset-0 flex items-center justify-center bg-vollio-950/50">
           <button
@@ -64,6 +67,7 @@ export default function Team({
               <button
                 className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4"
                 onClick={() => {
+                  setIsLoading(true);
                   exitFromTeam({
                     token: sessionStorage.getItem("token") ?? "",
                     exitUserId: `${selectedPlayer?.id}`,
@@ -80,9 +84,11 @@ export default function Team({
                       );
                       setSelectedPlayer(null);
                       setModalOpen(false);
+                      setIsLoading(false);
                     })
                     .catch((error) => {
                       console.error("Error in exitFromTeam:", error);
+                      setIsLoading(false);
                     });
                 }}
               >
@@ -117,6 +123,7 @@ export default function Team({
               <button
                 className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4"
                 onClick={() => {
+                  setIsLoading(true);
                   exitFromTeam({
                     token: sessionStorage.getItem("token") ?? "",
                     exitUserId: ``,
@@ -125,9 +132,11 @@ export default function Team({
                       console.log("Response from exitFromTeam:", response);
                       document.location.href = "/create/team";
                       setModalOpen(false);
+                      setIsLoading(false);
                     })
                     .catch((error) => {
                       console.error("Error in exitFromTeam:", error);
+                      setIsLoading(false);
                     });
                 }}
               >
@@ -161,14 +170,17 @@ export default function Team({
               <button
                 className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4"
                 onClick={() => {
+                  setIsLoading(true);
                   deleteTeam(sessionStorage.getItem("token") ?? "")
                     .then((response) => {
                       console.log("Response from exitFromTeam:", response);
                       document.location.href = "/create/team";
                       setModalOpen(false);
+                      setIsLoading(false);
                     })
                     .catch((error) => {
                       console.error("Error in exitFromTeam:", error);
+                      setIsLoading(false);
                     });
                 }}
               >
