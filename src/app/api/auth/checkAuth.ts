@@ -14,7 +14,7 @@ export default async function checkAuth(token: string) {
       const data = await response.json();
       return data
     } else {
-      console.error("Error checking login:", response.statusText);
+      console.error("Error checking login:", response);
       return null;
     }
   } catch (error) {

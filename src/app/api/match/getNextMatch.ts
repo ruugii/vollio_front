@@ -12,7 +12,7 @@ export default async function getNextMatch(token: string) {
       if (res.ok) {
         return res.json();
       } else {
-        console.log("Error creating match:", res.statusText);
+        console.log("Error creating match:", res);
       }
     })
     .then((data) => {

@@ -1,6 +1,7 @@
 "use client";
 
 import getNextMatch from "@/app/api/match/getNextMatch";
+import joinMatch from "@/app/api/match/join";
 import H2_component from "@/app/Text/H2_component";
 import H3_component from "@/app/Text/H3_component";
 import Text from "@/app/Text/Text";
@@ -35,7 +36,7 @@ export default function NextMatch() {
         {nextMatch &&
           nextMatch.map((match: any) => (
             <div
-              key={match?._id}
+              key={match?.id}
               className="bg-white shadow-md rounded-lg p-4 mb-4 w-full sm:w-1/2 lg:w-1/3"
             >
               <H3_component className="text-xl font-bold mb-2">
@@ -55,10 +56,10 @@ export default function NextMatch() {
                   : ""}
                 <br />
                 ELO: {match.team.elo ? match.team.elo : ""}
+                <br />
+                Numero de jugadores del equipo: {match.team.players.length ?? 0}
               </Text>
-              <Button
-                disabled
-              >
+              <Button onClick={() => joinMatch(token, match?.id)}>
                 APUNTARSE
               </Button>
             </div>

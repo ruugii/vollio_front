@@ -11,17 +11,11 @@ export default async function getMyMatch(token: string) {
     .then((res) => {
       if (res.ok) {
         return res.json();
-      } else {
-        console.error("Error creating match:", res.statusText);
       }
     })
     .then((data) => {
-      console.log("Response from createMatch:", data);
-      if (data.match) {
+      if (data?.match) {
         return data;
       }
-    })
-    .catch((error) => {
-      console.error("Error in create match:", error);
     });
 }
